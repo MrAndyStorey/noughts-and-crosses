@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
     #Add a loop for repeated game play
     while playAgain.lower() == "y":
-
+        #numberOfGames is only used in the end of game stats.
         numberOfGames +=1
 
         # Initialise an empty board - we ignore item 0 throughout
@@ -156,7 +156,9 @@ if __name__ == '__main__':
                 #Check for a Draw
                 countDraws += 1
                 print("No winner - it's a draw!")
-
+                
+        #Ask the user if they wish to play again.   we check for y or Y in the condition of the while loop.
         playAgain = input("Do you want to play again (y / Y)?")
 
+#Output the game stats to the user - the \n is a carriage return and % figures are rounded to 2 decimal places.
 print("After {} game(s) we have:\nDraws: {}, {:.2%}\nPlayer 1 (User) wins: {}, {:.2%}\nPlayer 2 (Computer) wins: {}, {:.2%}".format(numberOfGames, countDraws, countDraws/numberOfGames,countWins0, countWins0/numberOfGames, countWinsX, countWinsX/numberOfGames))
