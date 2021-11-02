@@ -40,7 +40,7 @@ def checkFullBoard(passedBoard):
         if passedBoard[position] == '#':
             blnReturn  = False
 
-            #If we have found a black value, there is no need to iterate through the remaining positions.
+            #If we've found a blank, there's no need to iterate through the remaining.
             break
 
     return blnReturn
@@ -102,40 +102,61 @@ def randomNextMove(passedBoard):
 if __name__ == '__main__':
     print('Welcome to Noughts & Crosses!')
 
-    # Initialise an empty board - we ignore item 0 throughout
-    board = ['#'] * 10
-    
-    # Initialise the intTurns counter.  This is how we work out if it's player 1 or 2
-    intTurns = 0
+    #Setup local variables
+    numberOfGames, countDraws, countWins0, countWinsX = 0,0,0,0
+    playAgain = "y"
 
-    # Display the initial blank board.
-    displayBoard(board)
+    #Add a loop for repeated game play
+    while playAgain.lower() == "y":
 
-    #Iterate for the game, checking to see if the board is full
-    while not checkFullBoard(board):
+        numberOfGames +=1
 
-        # Who's turn is it? - P1 (User) or P2 (Computer)
-        if intTurns % 2 == 0:
+        # Initialise an empty board - we ignore item 0 throughout
+        board = ['#'] * 10
+        
+        # Initialise the intTurns counter.  This is how we work out if it's player 1 or 2
+        intTurns = 0
 
-            # Player 1 (user) to choose where to put the mark
-            marker = "O"
-            position = getPlayerChoice(board)
-
-            # Play the marker on the board
-            placeMarker(board, position, marker)
-
-        else:
-            #Get the next move for Player 2 (computer)
-            marker = "X"
-            placeMarker(board,randomNextMove(board),marker)
-
-        # Increment the intTurns counter
-        intTurns +=1
-
-        # Display the board
+        # Display the initial blank board.
         displayBoard(board)
 
-        # Check the status of the board game - do we have a winner?
-        if checkForAWinner(board, marker):
-            print(marker + "'s won!")
-            break
+        #Iterate for the game, checking to see if the board is full
+        while not checkFullBoard(board):
+
+            # Who's turn is it? - P1 (User) or P2 (Computer)
+            if intTurns % 2 == 0:
+
+                # Player 1 (user) to choose where to put the mark
+                marker = "O"
+                position = getPlayerChoice(board)
+
+                # Play the marker on the board
+                placeMarker(board, position, marker)
+
+            else:
+                #Get the next move for Player 2 (computer)
+                marker = "X"
+                placeMarker(board,randomNextMove(board),marker)
+
+            # Increment the intTurns counter
+            intTurns +=1
+
+            # Display the board
+            displayBoard(board)
+
+            # Check the status of the board game - do we have a winner?
+            if checkForAWinner(board, marker):
+                print(marker + "'s won!")
+                if marker == "O":
+                    countWins0 +=1
+                else:
+                    countWinsX +=1
+                break
+            elif checkFullBoard(board):
+                #Check for a Draw
+                countDraws += 1
+                print("No winner - it's a draw!")
+
+        playAgain = input("Do you want to play again (y / Y)?")
+
+print("After {} game(s) we have:\nDraws: {}, {:.2%}\nPlayer 1 (User) wins: {}, {:.2%}\nPlayer 2 (Computer) wins: {}, {:.2%}".format(numberOfGames, countDraws, countDraws/numberOfGames,countWins0, countWins0/numberOfGames, countWinsX, countWinsX/numberOfGames))
