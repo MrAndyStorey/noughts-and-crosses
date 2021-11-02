@@ -32,9 +32,18 @@ def checkPosition(passedBoard, passedPosition):
     return passedBoard[passedPosition] == '#'
 
 def checkFullBoard(passedBoard):
+    #Initialise local variable that we'll pass bnack as the return value
+    blnReturn  = True
+
     #Iterate through the passedBoard to see if the board is full
-    #****This need simplfying better for the pupils****
-    return len([x for x in passedBoard if x == '#']) == 1
+    for position in range(1,10):
+        if passedBoard[position] == '#':
+            blnReturn  = False
+
+            #If we have found a black value, there is no need to iterate through the remaining positions.
+            break
+
+    return blnReturn
 
 def checkForAWinner(passedBoard, passedMarker):
     if passedBoard[1] == passedBoard[2] == passedBoard[3] == passedMarker:
